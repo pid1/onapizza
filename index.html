@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ona.pizza - Projects</title>
+    <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Mono:wght@200..800&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            cursor: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"><text y="24" font-size="24">🍕</text></svg>') 12 12, auto;
+        }
+
+        body {
+            font-family: 'Atkinson Hyperlegible Mono', monospace;
+            background: #0a0a0f;
+            min-height: 100vh;
+            overflow-x: hidden;
+            color: #e0e0e0;
+        }
+
+        /* Animated cyberpunk background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .grid-overlay {
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            top: -50%;
+            left: -50%;
+            background-image: 
+                linear-gradient(rgba(255, 107, 53, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 107, 53, 0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: gridMove 20s linear infinite;
+            transform: perspective(500px) rotateX(60deg);
+        }
+
+        @keyframes gridMove {
+            0% { transform: perspective(500px) rotateX(60deg) translateY(0); }
+            100% { transform: perspective(500px) rotateX(60deg) translateY(50px); }
+        }
+
+        .floating-pizza {
+            position: absolute;
+            font-size: 2rem;
+            opacity: 0.35;
+            animation: floatPizza 15s ease-in-out infinite;
+        }
+
+        @keyframes floatPizza {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(-30px) rotate(90deg); }
+            50% { transform: translateY(0) rotate(180deg); }
+            75% { transform: translateY(30px) rotate(270deg); }
+        }
+
+        .neon-line {
+            position: absolute;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #ff6b35, #ff00ff, #00ffff, transparent);
+            animation: neonScan 8s ease-in-out infinite;
+            opacity: 0.6;
+        }
+
+        @keyframes neonScan {
+            0%, 100% { top: 0; opacity: 0; }
+            10% { opacity: 0.6; }
+            90% { opacity: 0.6; }
+            50% { top: 100%; }
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            padding: 60px 20px;
+            position: relative;
+        }
+
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 4rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #ff6b35, #ff00ff, #00ffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 50px rgba(255, 107, 53, 0.5);
+            animation: glitch 3s infinite;
+            position: relative;
+        }
+
+        .logo::before,
+        .logo::after {
+            content: 'ona.pizza';
+            position: absolute;
+            left: 0;
+            right: 0;
+            opacity: 0.8;
+        }
+
+        .logo::before {
+            animation: glitchTop 1s infinite;
+            clip-path: polygon(0 0, 100% 0, 100% 33%, 0 33%);
+        }
+
+        .logo::after {
+            animation: glitchBottom 1.5s infinite;
+            clip-path: polygon(0 67%, 100% 67%, 100% 100%, 0 100%);
+        }
+
+        @keyframes glitchTop {
+            0%, 100% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(2px, -2px); }
+            60% { transform: translate(-1px, 1px); }
+            80% { transform: translate(1px, -1px); }
+        }
+
+        @keyframes glitchBottom {
+            0%, 100% { transform: translate(0); }
+            25% { transform: translate(2px, -2px); }
+            50% { transform: translate(-2px, 2px); }
+            75% { transform: translate(1px, -1px); }
+        }
+
+        .tagline {
+            font-size: 1.2rem;
+            color: #ff6b35;
+            margin-top: 20px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+        }
+
+        /* Projects Grid */
+        .projects-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            text-align: center;
+            margin-bottom: 50px;
+            color: #00ffff;
+            text-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .project-card {
+            background: linear-gradient(135deg, rgba(20, 20, 30, 0.9), rgba(30, 30, 50, 0.9));
+            border: 1px solid rgba(255, 107, 53, 0.3);
+            border-radius: 10px;
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            min-height: 380px;
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 107, 53, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .project-card:hover::before {
+            left: 100%;
+        }
+
+        .project-card:hover {
+            border-color: #ff6b35;
+            box-shadow: 
+                0 0 30px rgba(255, 107, 53, 0.3),
+                inset 0 0 30px rgba(255, 107, 53, 0.1);
+            transform: translateY(-5px);
+        }
+
+        .project-number {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3rem;
+            font-weight: 900;
+            color: rgba(255, 0, 255, 0.2);
+            position: absolute;
+            top: 10px;
+            right: 20px;
+        }
+
+        .project-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .project-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            color: #ff6b35;
+            margin-bottom: 15px;
+        }
+
+        .project-description {
+            color: #a0a0a0;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            flex-grow: 1;
+            display: -webkit-box;
+            -webkit-line-clamp: 4;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .tag {
+            background: rgba(0, 255, 255, 0.1);
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: #00ffff;
+        }
+
+        .project-link {
+            display: inline-block;
+            align-self: flex-start;
+            margin-top: 20px;
+            padding: 10px 25px;
+            background: linear-gradient(135deg, #ff6b35, #ff00ff);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .project-link:hover {
+            box-shadow: 0 0 20px rgba(255, 107, 53, 0.5);
+            transform: scale(1.05);
+        }
+
+        /* Archived project */
+        .project-card.archived {
+            opacity: 0.6;
+            border-color: rgba(128, 128, 128, 0.3);
+        }
+
+        .project-card.archived:hover {
+            border-color: #888;
+            box-shadow: 
+                0 0 20px rgba(128, 128, 128, 0.2),
+                inset 0 0 20px rgba(128, 128, 128, 0.1);
+        }
+
+        .project-card.archived .project-title {
+            color: #888;
+        }
+
+        .project-card.archived .project-link {
+            background: linear-gradient(135deg, #666, #888);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            border-top: 1px solid rgba(255, 107, 53, 0.2);
+            margin-top: 60px;
+        }
+
+        footer p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        footer a {
+            color: #ff6b35;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-shadow: 0 0 10px rgba(255, 107, 53, 0.5);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .logo {
+                font-size: 2.5rem;
+            }
+            
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-animation">
+        <div class="grid-overlay"></div>
+        <div class="neon-line" style="width: 100%;"></div>
+        <div class="neon-line" style="width: 60%; left: 20%; animation-delay: 2s;"></div>
+        <div class="neon-line" style="width: 80%; left: 10%; animation-delay: 4s;"></div>
+        <div class="floating-pizza" style="top: 10%; left: 5%;">🍕</div>
+        <div class="floating-pizza" style="top: 30%; right: 10%; animation-delay: -3s;">🍕</div>
+        <div class="floating-pizza" style="top: 60%; left: 15%; animation-delay: -7s;">🍕</div>
+        <div class="floating-pizza" style="top: 80%; right: 5%; animation-delay: -11s;">🍕</div>
+        <div class="floating-pizza" style="top: 45%; left: 80%; animation-delay: -5s;">🍕</div>
+    </div>
+
+    <header>
+        <h1 class="logo">ona.pizza</h1>
+        <p class="tagline">// Projects served hot //</p>
+    </header>
+
+    <main class="projects-container">
+        <div class="projects-grid">
+            <article class="project-card">
+                <span class="project-number">01</span>
+                <div class="project-icon">📱</div>
+                <h3 class="project-title">textmaxxing</h3>
+                <p class="project-description">Your SMS grindset coach. Touching grass optional. Lets you have SMS conversations with Claude using Twilio.</p>
+                <div class="project-tags">
+                    <span class="tag">AI</span>
+                    <span class="tag">FastAPI</span>
+                    <span class="tag">Python</span>
+                    <span class="tag">Twilio</span>
+                </div>
+                <a href="https://github.com/pid1/textmaxxing" class="project-link" target="_blank">GITHUB →</a>
+            </article>
+
+            <article class="project-card">
+                <span class="project-number">02</span>
+                <div class="project-icon">🤖</div>
+                <h3 class="project-title">promptchad</h3>
+                <p class="project-description">Test prompts across multiple AI providers (OpenAI, Anthropic, Google) and compare results side-by-side with a nice web UI.</p>
+                <div class="project-tags">
+                    <span class="tag">AI</span>
+                    <span class="tag">Anthropic</span>
+                    <span class="tag">Google</span>
+                    <span class="tag">OpenAI</span>
+                </div>
+                <a href="https://github.com/pid1/promptchad" class="project-link" target="_blank">GITHUB →</a>
+            </article>
+
+            <article class="project-card">
+                <span class="project-number">03</span>
+                <div class="project-icon">🦅</div>
+                <h3 class="project-title">patrIoT</h3>
+                <p class="project-description">Daily AI generated patriotic images on the AdaFruit MagTag.</p>
+                <div class="project-tags">
+                    <span class="tag">AI</span>
+                    <span class="tag">CircuitPython</span>
+                    <span class="tag">IoT</span>
+                    <span class="tag">MagTag</span>
+                </div>
+                <a href="https://github.com/pid1/patrIoT" class="project-link" target="_blank">GITHUB →</a>
+            </article>
+
+            <article class="project-card">
+                <span class="project-number">04</span>
+                <div class="project-icon">🦕</div>
+                <h3 class="project-title">fridgefriend</h3>
+                <p class="project-description">Tamagotchi-style companion built for the Adafruit MagTag e-ink display. Play, pet, feed, and put your dino to sleep.</p>
+                <div class="project-tags">
+                    <span class="tag">CircuitPython</span>
+                    <span class="tag">E-Ink</span>
+                    <span class="tag">IoT</span>
+                    <span class="tag">MagTag</span>
+                </div>
+                <a href="https://github.com/pid1/fridgefriend" class="project-link" target="_blank">GITHUB →</a>
+            </article>
+
+            <article class="project-card">
+                <span class="project-number">05</span>
+                <div class="project-icon">🦆</div>
+                <h3 class="project-title">duck</h3>
+                <p class="project-description">An HTML-based URL shortener for static sites. Run it out of places like GitHub Pages.</p>
+                <div class="project-tags">
+                    <span class="tag">HTML</span>
+                    <span class="tag">Python</span>
+                    <span class="tag">Static Sites</span>
+                </div>
+                <a href="https://github.com/pid1/duck" class="project-link" target="_blank">GITHUB →</a>
+            </article>
+
+            <article class="project-card">
+                <span class="project-number">06</span>
+                <div class="project-icon">🍍</div>
+                <h3 class="project-title">pineapple</h3>
+                <p class="project-description">A sweet and tart resume generator. Converts Markdown files into modern PDF resumes parsable by AI/ATS systems.</p>
+                <div class="project-tags">
+                    <span class="tag">Markdown</span>
+                    <span class="tag">PDF</span>
+                    <span class="tag">Python</span>
+                </div>
+                <a href="https://github.com/pid1/pineapple" class="project-link" target="_blank">GITHUB →</a>
+            </article>
+
+            <article class="project-card">
+                <span class="project-number">07</span>
+                <div class="project-icon">🧠</div>
+                <h3 class="project-title">twobraincells</h3>
+                <p class="project-description">A minimally viable CSS library for text-first, accessible, resource intelligent websites.</p>
+                <div class="project-tags">
+                    <span class="tag">Accessibility</span>
+                    <span class="tag">CSS</span>
+                    <span class="tag">Minimal</span>
+                </div>
+                <a href="https://github.com/pid1/twobraincells" class="project-link" target="_blank">GITHUB →</a>
+            </article>
+
+            <article class="project-card">
+                <span class="project-number">08</span>
+                <div class="project-icon">📜</div>
+                <h3 class="project-title">kunnandi</h3>
+                <p class="project-description">From Old Norse for "knowledge." A living repository of dictum.</p>
+                <div class="project-tags">
+                    <span class="tag">Knowledge</span>
+                    <span class="tag">Philosophy</span>
+                    <span class="tag">Writing</span>
+                </div>
+                <a href="https://github.com/pid1/kunnandi" class="project-link" target="_blank">GITHUB →</a>
+            </article>
+
+            <article class="project-card archived">
+                <span class="project-number">09</span>
+                <div class="project-icon">🔒</div>
+                <h3 class="project-title">test-sec-flags</h3>
+<p class="project-description">Scripts to automate testing the performance impact of security-oriented compilation and linking flags for Arch Linux packages. <em>(Inactive)</em></p>
+                <div class="project-tags">
+                    <span class="tag">Arch Linux</span>
+                    <span class="tag">Benchmarking</span>
+                    <span class="tag">Security</span>
+                </div>
+                <a href="https://github.com/pid1/test-sec-flags" class="project-link" target="_blank">GITHUB →</a>
+            </article>
+        </div>
+    </main>
+
+    <footer>
+        <p>© 2026 <a href="/">ona.pizza</a> // All slices reserved</p>
+    </footer>
+</body>
+</html>
