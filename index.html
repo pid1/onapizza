@@ -263,6 +263,17 @@
             box-shadow: 1px 1px 0px #962D22;
         }
 
+        .project-links {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .project-links .project-link {
+            margin-top: 0;
+        }
+
         /* Archived project */
         .project-card.archived {
             opacity: 0.55;
@@ -394,8 +405,10 @@
                     <span class="tag">Markdown</span>
                     <span class="tag">Python</span>
                 </div>
-                <a href="https://github.com/pid1/hotslice" class="project-link" target="_blank">GITHUB →</a>
-                <a href="https://hotslice.pizza/" class="project-link" target="_blank">WEBSITE →</a>
+                <div class="project-links">
+                    <a href="https://github.com/pid1/hotslice" class="project-link" target="_blank">GITHUB →</a>
+                    <a href="https://hotslice.pizza/" class="project-link" target="_blank">WEBSITE →</a>
+                </div>
             </article>
 
             <article class="project-card">
@@ -492,8 +505,10 @@
                     <span class="tag">JavaScript</span>
                     <span class="tag">Satire</span>
                 </div>
-                <a href="https://github.com/pid1/whelp" class="project-link" target="_blank">GITHUB →</a>
-                <a href="https://brookszoo.online/" class="project-link" target="_blank">WEBSITE →</a>
+                <div class="project-links">
+                    <a href="https://github.com/pid1/whelp" class="project-link" target="_blank">GITHUB →</a>
+                    <a href="https://brookszoo.online/" class="project-link" target="_blank">WEBSITE →</a>
+                </div>
             </article>
 
             <article class="project-card">
