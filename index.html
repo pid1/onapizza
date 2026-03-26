@@ -341,6 +341,38 @@
             text-decoration: underline wavy #F4A261;
         }
 
+        /* Sponsor badge */
+        .sponsor-fixed {
+            position: fixed;
+            top: 16px;
+            right: 16px;
+            z-index: 100;
+        }
+
+        .sponsor-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            background: #FFFDF7;
+            border: 3px solid #F4A261;
+            border-radius: 30px;
+            color: #E63946;
+            font-family: 'Fredoka', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-decoration: none;
+            box-shadow: 3px 3px 0px #F4A261;
+            transition: all 0.2s ease;
+        }
+
+        .sponsor-link:hover {
+            background: #E63946;
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 4px 5px 0px #C0392B;
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             .logo {
@@ -358,6 +390,10 @@
     </style>
 </head>
 <body>
+    <div class="sponsor-fixed">
+        <a href="https://github.com/sponsors/pid1" class="sponsor-link" target="_blank" rel="noopener">❤️ Sponsor</a>
+    </div>
+
     <div class="bg-animation">
         <div class="grid-overlay"></div>
         <div class="neon-line" style="width: 100%;"></div>
